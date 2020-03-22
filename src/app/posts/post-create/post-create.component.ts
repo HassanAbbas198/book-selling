@@ -15,7 +15,7 @@ export class PostCreateComponent implements OnInit {
   constructor(public postsService: PostService) {}
 
   ngOnInit() {
-    this;
+    // this.postsService.getPostUpdateListener;
   }
 
   onAddPost(form: NgForm) {
