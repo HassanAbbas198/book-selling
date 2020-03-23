@@ -9,19 +9,18 @@ import { PostService } from "../post.service";
   styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent implements OnInit {
-  enteredTitle = "";
-  enteredContent = "";
-
   constructor(public postsService: PostService) {}
 
   ngOnInit() {
     // this.postsService.getPostUpdateListener;
   }
 
+  //event listener accepting a form as parameter
   onAddPost(form: NgForm) {
     if (form.invalid) {
       return;
     }
+    //sending the title and content to the addPost method in post.service.ts
     this.postsService.addPost(form.value.title, form.value.content);
     form.resetForm();
   }
