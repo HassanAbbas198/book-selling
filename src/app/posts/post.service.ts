@@ -5,6 +5,7 @@ import { Post } from "./post.model";
 
 import { Subject, pipe } from "rxjs";
 import { map } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Injectable({ providedIn: "root" })
 //handling all the posts services in a class and exporting it
@@ -13,7 +14,7 @@ export class PostService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   //getting all the posts from the API
   getPosts() {
@@ -41,6 +42,17 @@ export class PostService {
     return this.postsUpdated.asObservable();
   }
 
+  getPost(id: string) {
+    /*this will return the observable we're getting from the httpClient
+    so we can subscribe in the component*/
+    return this.http.get<{ _id: string; title: string; content: string }>(
+      "http://localhost:3000/api/posts/" + id
+    );
+
+    //this will return the post from the local array
+    // return { ...this.posts.find(p => p.id === id) };
+  }
+
   //adding post method taking title, content as arguments
   addPost(title: string, content: string) {
     const post: Post = {
@@ -61,6 +73,7 @@ export class PostService {
         post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
+        this.router.navigate(["/"]);
       });
   }
 
@@ -72,6 +85,24 @@ export class PostService {
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
+      });
+  }
+
+  updatePost(id: string, title: string, content: string) {
+    const post: Post = {
+      id: id,
+      title: title,
+      content: content
+    };
+    this.http
+      .put("http://localhost:3000/api/posts/" + id, post)
+      .subscribe(response => {
+        const updatedPosts = [...this.posts];
+        const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+        updatedPosts[oldPostIndex] = post;
+        this.posts = updatedPosts;
+        this.postsUpdated.next([...this.posts]);
+        this.router.navigate(["/"]);
       });
   }
 }
