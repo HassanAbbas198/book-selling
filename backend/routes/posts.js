@@ -64,13 +64,28 @@ router.post(
 
 //getting all posts
 router.get("", (req, res, next) => {
+  //we receive it as string, we cam add + so it will be converted to a number
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
   //Post.find() return the documents of the Post model
-  Post.find().then(documents => {
-    res.status(200).json({
-      message: "Data fetched succesfully",
-      posts: documents
+  const postQuery = Post.find();
+  // url : http://localhost:3000/api/posts?pagesize=3&page=1
+  let fetchedPosts;
+  if (pageSize && currentPage) {
+    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  }
+  postQuery
+    .then(documents => {
+      fetchedPosts = documents;
+      return Post.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: "Data fetched succesfully",
+        posts: fetchedPosts,
+        maxPosts: count
+      });
     });
-  });
 });
 
 //getting a single post
