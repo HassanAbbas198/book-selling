@@ -1,8 +1,9 @@
 const express = require("express");
 const multer = require("multer");
+const router = express.Router();
 
 const Post = require("../models/post");
-const router = express.Router();
+const checkAuth = require("../middleware/check-auth");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -12,7 +13,7 @@ const MIME_TYPE_MAP = {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error("invalid mime type");
+    let error = new Error("Invalid mime type");
     if (isValid) {
       error = null;
     }
@@ -32,6 +33,7 @@ const storage = multer.diskStorage({
 //adding a new post
 router.post(
   "",
+  checkAuth,
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
@@ -51,11 +53,6 @@ router.post(
           title: createdPost.title,
           content: createdPost.content,
           imagePath: createdPost.imagePath
-
-          /* or we can use spread operator
-          ...createdPost,
-           id: reatedPost._id,
-          */
         }
       });
     });
@@ -64,7 +61,7 @@ router.post(
 
 //getting all posts
 router.get("", (req, res, next) => {
-  //we receive it as string, we cam add + so it will be converted to a number
+  //we receive it as string, we can add + so it will be converted to a number
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   //Post.find() return the documents of the Post model
@@ -102,6 +99,7 @@ router.get("/:id", (req, res, next) => {
 //editing a post
 router.put(
   "/:id",
+  checkAuth,
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
     let imagePath = req.body.imagePath;
@@ -126,7 +124,7 @@ router.put(
 );
 
 //delete a selected post
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth, (req, res, next) => {
   Post.deleteOne({ _id: req.params.id }).then(result => {
     res.status(200).json({
       message: "Post deleted succesfully"

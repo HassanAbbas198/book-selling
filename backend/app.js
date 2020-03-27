@@ -3,13 +3,13 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-// const cors = require("cors");
-// app.use(cors());
 const app = express();
 
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join("backend/images")));
+
 const postsRoutes = require("./routes/posts");
+const usersRoutes = require("./routes/users");
 
 //conmecting to mongoDB
 mongoose
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -39,6 +39,7 @@ app.use((req, res, next) => {
 
 //redirecting everything with /api/posts path to the routes/posts folder
 app.use("/api/posts", postsRoutes);
+app.use("/api/users", usersRoutes);
 
 //exporting the app
 module.exports = app;

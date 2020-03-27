@@ -6,6 +6,7 @@ import { Post } from "./post.model";
 import { Subject, pipe } from "rxjs";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({ providedIn: "root" })
 //handling all the posts services in a class and exporting it
@@ -61,9 +62,6 @@ export class PostService {
       content: string;
       imagePath: string;
     }>("http://localhost:3000/api/posts/" + id);
-
-    //this will return the post from the local array
-    // return { ...this.posts.find(p => p.id === id) };
   }
 
   //adding post method taking title, content, img as arguments
@@ -78,7 +76,6 @@ export class PostService {
         "http://localhost:3000/api/posts",
         postData
       )
-      //receiving a JSON (responseData) and expecting a postId
       .subscribe(responseData => {
         this.router.navigate(["/"]);
       });
