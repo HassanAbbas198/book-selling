@@ -19,6 +19,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   isLoading = false;
   userIsAuthenticated = false;
+  userId: string;
 
   //for pagination
   totalPosts = 0;
@@ -41,11 +42,13 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.posts = postData.posts;
         this.totalPosts = postData.postCount;
       });
+    this.userId = this.authService.getUserId();
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
       });
   }
 

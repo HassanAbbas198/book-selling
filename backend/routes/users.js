@@ -62,7 +62,8 @@ router.post("/login", (req, res, next) => {
       //here we dont need to use "return" cz nothing will be execuded after it
       res.status(200).json({
         token: token,
-        expiresIn: 2000000
+        expiresIn: 2000000,
+        userId: fetchedUser._id
       });
     })
     .catch(err => {

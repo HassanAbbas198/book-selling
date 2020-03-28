@@ -48,15 +48,15 @@
     <mat-form-field>
       <input
         matInput
-        name="password"
+        name="confPassword"
         ngModel
         #passwordConfirmInput="ngModel"
         type="password"
         placeholder="Confirm password"
         required
       />
-      <mat-error *ngIf="passwordInput.invalid"
-        >Please enter a valid password</mat-error
+      <mat-error *ngIf="passwordConfirmInput.invalid"
+        >Your passwords don't match</mat-error
       >
     </mat-form-field>
 

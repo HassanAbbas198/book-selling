@@ -10,6 +10,7 @@ export class SignupComponent {
   constructor(public authService: AuthService) {}
 
   isLoading = false;
+  // passMatch = false;
 
   onSignup(form: NgForm) {
     if (form.invalid) {
@@ -22,4 +23,11 @@ export class SignupComponent {
       form.value.password
     );
   }
+
+  // passwordMatch(form: NgForm) {
+  //   if (form.value.password === form.value.confPassword) {
+  //     console.log(form.value);
+  //     this.passMatch = true;
+  //   }
+  // }
 }

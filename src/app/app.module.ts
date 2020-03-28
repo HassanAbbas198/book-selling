@@ -10,6 +10,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -44,6 +46,8 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatMenuModule,
+    MatIconModule,
     HttpClientModule
   ],
   providers: [
