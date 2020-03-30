@@ -1,16 +1,27 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Subscription } from "rxjs";
+
 import { AuthService } from "../auth.service";
 
 @Component({
   templateUrl: "./signup.component.html",
   styleUrls: ["./signup.component.css"]
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit, OnDestroy {
+  isLoading = false;
+  private authStatusSub: Subscription;
+  // passMatch = false;
+
   constructor(public authService: AuthService) {}
 
-  isLoading = false;
-  // passMatch = false;
+  ngOnInit() {
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(authStatus => {
+        this.isLoading = false;
+      });
+  }
 
   onSignup(form: NgForm) {
     if (form.invalid) {
@@ -24,10 +35,7 @@ export class SignupComponent {
     );
   }
 
-  // passwordMatch(form: NgForm) {
-  //   if (form.value.password === form.value.confPassword) {
-  //     console.log(form.value);
-  //     this.passMatch = true;
-  //   }
-  // }
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+  }
 }

@@ -45,21 +45,6 @@
       >
     </mat-form-field>
 
-    <mat-form-field>
-      <input
-        matInput
-        name="confPassword"
-        ngModel
-        #passwordConfirmInput="ngModel"
-        type="password"
-        placeholder="Confirm password"
-        required
-      />
-      <mat-error *ngIf="passwordConfirmInput.invalid"
-        >Your passwords don't match</mat-error
-      >
-    </mat-form-field>
-
     <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">
       Sign Up
     </button>

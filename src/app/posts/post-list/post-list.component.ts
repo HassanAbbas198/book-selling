@@ -27,6 +27,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSizeOptions = [2, 4, 6, 10];
 
+  specificUser = false;
+
   constructor(
     public postsService: PostService,
     public authService: AuthService
@@ -42,6 +44,11 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.posts = postData.posts;
         this.totalPosts = postData.postCount;
       });
+
+    // this.posts.map(()=> {
+
+    // });
+
     this.userId = this.authService.getUserId();
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
@@ -50,14 +57,24 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+
+    // if (this.userId ) {
+    //   this.specificUser = true;
+    // }
+    // console.log(this.specificUser);
   }
 
   onDelete(postId: string) {
     this.isLoading = true;
-    this.postsService.deletePost(postId).subscribe(() => {
-      //fetching new posts after succesfully deleting a post
-      this.postsService.getPosts(this.postsPerPage, this.currentPage);
-    });
+    this.postsService.deletePost(postId).subscribe(
+      () => {
+        //fetching new posts after succesfully deleting a post
+        this.postsService.getPosts(this.postsPerPage, this.currentPage);
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
 
   onChangedPage(pageData: PageEvent) {

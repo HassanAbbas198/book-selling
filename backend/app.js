@@ -14,7 +14,9 @@ const usersRoutes = require("./routes/users");
 //conmecting to mongoDB
 mongoose
   .connect(
-    "mongodb+srv://Hassan:sjtaYzzb9qrNTTnu@cluster0-hgg0a.mongodb.net/node-angular?retryWrites=true&w=majority"
+    "mongodb+srv://Hassan:" +
+      process.env.MONGO_ATLAS_PW +
+      "@cluster0-hgg0a.mongodb.net/node-angular?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Connected to Database");
