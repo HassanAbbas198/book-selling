@@ -11,13 +11,16 @@ app.use("/images", express.static(path.join("backend/images")));
 const postsRoutes = require("./routes/posts");
 const usersRoutes = require("./routes/users");
 
-//conmecting to mongoDB
+// conmecting to mongoDB
 mongoose
   .connect(
     "mongodb+srv://Hassan:" +
       process.env.MONGO_ATLAS_PW +
       "@cluster0-hgg0a.mongodb.net/node-angular?retryWrites=true&w=majority"
   )
+
+  // mongodb+srv://Hassan:sjtaYzzb9qrNTTnu@cluster0-hgg0a.mongodb.net/node-angular?retryWrites=true&w=majority
+
   .then(() => {
     console.log("Connected to Database");
   })
@@ -25,7 +28,7 @@ mongoose
     console.log("Failed!");
   });
 
-//fixing the CORS error
+// fixing the CORS error
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -39,9 +42,9 @@ app.use((req, res, next) => {
   next();
 });
 
-//redirecting everything with /api/posts path to the routes/posts folder
+// redirecting everything with /api/posts path to the routes/posts folder
 app.use("/api/posts", postsRoutes);
 app.use("/api/users", usersRoutes);
 
-//exporting the app
+// exporting the app so we can use it to create server in server.js
 module.exports = app;

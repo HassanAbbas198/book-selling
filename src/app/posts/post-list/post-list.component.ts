@@ -10,24 +10,20 @@ import { AuthService } from "src/app/auth/auth.service";
 @Component({
   selector: "app-post-list",
   templateUrl: "./post-list.component.html",
-  styleUrls: ["./post-list.component.css"]
+  styleUrls: ["./post-list.component.css"],
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
 
   private postsSub: Subscription;
-  private authStatusSub: Subscription;
+
   isLoading = false;
-  userIsAuthenticated = false;
-  userId: string;
 
   //for pagination
   totalPosts = 0;
   postsPerPage = 4;
   currentPage = 1;
   pageSizeOptions = [2, 4, 6, 10];
-
-  specificUser = false;
 
   constructor(
     public postsService: PostService,
@@ -44,37 +40,6 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.posts = postData.posts;
         this.totalPosts = postData.postCount;
       });
-
-    // this.posts.map(()=> {
-
-    // });
-
-    this.userId = this.authService.getUserId();
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-        this.userId = this.authService.getUserId();
-      });
-
-    // if (this.userId ) {
-    //   this.specificUser = true;
-    // }
-    // console.log(this.specificUser);
-  }
-
-  onDelete(postId: string) {
-    this.isLoading = true;
-    this.postsService.deletePost(postId).subscribe(
-      () => {
-        //fetching new posts after succesfully deleting a post
-        this.postsService.getPosts(this.postsPerPage, this.currentPage);
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
   }
 
   onChangedPage(pageData: PageEvent) {
@@ -86,6 +51,5 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.postsSub.unsubscribe;
-    this.authStatusSub.unsubscribe;
   }
 }

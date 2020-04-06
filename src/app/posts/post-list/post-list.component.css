@@ -17,9 +17,41 @@ mat-paginator {
 
 .post-image {
   width: 100%;
+  margin: auto;
 }
 
 .post-image img {
   width: 100%;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.post-card {
+  max-width: 245px;
+  margin: auto;
+  margin-top: 45px;
+}
+
+.mat-card-header {
+  padding-bottom: 7px;
+}
+
+/* .post-header-image {
+  background-image: url("https://media.istockphoto.com/vectors/sg171006xvector-of-user-icon-in-circle-line-vector-iconic-design-vector-id858615492?k=6&m=858615492&s=170667a&w=0&h=ydmP350R8HJJLuDuaL0pHPhdtSETfq_tdc3V0nmWRZ4=");
+  background-size: cover;
+} */
+
+.card-title {
+  margin: auto;
+  text-align: center;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }

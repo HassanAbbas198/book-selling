@@ -1,0 +1,23 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card class="post-card" *ngIf="!isLoading && singlePost">
+  <mat-card-header>
+    <!-- <div mat-card-avatar class="post-header-image"></div> -->
+    <mat-card-title>{{ singlePost.title }}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="singlePost.imagePath" [alt]="singlePost.title" />
+  <mat-card-content>
+    <p>
+      {{ singlePost.content }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions
+    *ngIf="userIsAuthenticated && userId === singlePost.creator"
+  >
+    <a mat-button color="primary" [routerLink]="['/edit', singlePost.id]"
+      >Edit</a
+    >
+    <button mat-button color="warn" (click)="onDelete(singlePost.id)">
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>

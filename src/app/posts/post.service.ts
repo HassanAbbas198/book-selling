@@ -12,15 +12,15 @@ import { environment } from "../../environments/environment";
 const BACKEND_URL = environment.apiUrl + "/posts/";
 
 @Injectable({ providedIn: "root" })
-//handling all the posts services in a class and exporting it
+// handling all the posts services in a class and exporting it
 export class PostService {
-  //creating an array of type Post (interface)
+  // creating an array of type Post (interface)
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  //getting all the posts from the API
+  // getting all the posts from the API
   getPosts(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
@@ -28,27 +28,27 @@ export class PostService {
         BACKEND_URL + queryParams
       )
       .pipe(
-        map(postData => {
+        map((postData) => {
           return {
-            posts: postData.posts.map(post => {
+            posts: postData.posts.map((post) => {
               return {
                 title: post.title,
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
-                creator: post.creator
+                creator: post.creator,
               };
             }),
-            maxPosts: postData.maxPosts
+            maxPosts: postData.maxPosts,
           };
         })
       )
       //transformedposts is the returned value of the pipe.. we tranformed it to get the id
-      .subscribe(transformedPostData => {
+      .subscribe((transformedPostData) => {
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
-          postCount: transformedPostData.maxPosts
+          postCount: transformedPostData.maxPosts,
         });
       });
   }
@@ -69,7 +69,7 @@ export class PostService {
     }>(BACKEND_URL + id);
   }
 
-  //adding post method taking title, content, img as arguments
+  // adding post method taking title, content, img as arguments
   addPost(title: string, content: string, image: File) {
     const postData = new FormData();
     postData.append("title", title);
@@ -78,7 +78,7 @@ export class PostService {
     //sending a POST request to app.js
     this.http
       .post<{ message: string; post: Post }>(BACKEND_URL, postData)
-      .subscribe(responseData => {
+      .subscribe((responseData) => {
         this.router.navigate(["/"]);
       });
   }
@@ -102,11 +102,11 @@ export class PostService {
         title: title,
         content: content,
         imagePath: image,
-        creator: null
+        creator: null,
       };
     }
-    this.http.put(BACKEND_URL + id, postData).subscribe(response => {
-      this.router.navigate(["/"]);
+    this.http.put(BACKEND_URL + id, postData).subscribe((response) => {
+      this.router.navigate([`/post-details/${id}`]);
     });
   }
 }

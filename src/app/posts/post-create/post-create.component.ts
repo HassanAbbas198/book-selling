@@ -11,7 +11,7 @@ import { AuthService } from "src/app/auth/auth.service";
 @Component({
   selector: "app-post-create",
   templateUrl: "./post-create.component.html",
-  styleUrls: ["./post-create.component.css"]
+  styleUrls: ["./post-create.component.css"],
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
   private mode = "create";
@@ -33,39 +33,39 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authStatusSub = this.authService
       .getAuthStatusListener()
-      .subscribe(authStatus => {
+      .subscribe((authStatus) => {
         this.isLoading = false;
       });
     this.form = new FormGroup({
       title: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
+        validators: [Validators.required, Validators.minLength(3)],
       }),
       content: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       image: new FormControl(null, {
         validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
+        asyncValidators: [mimeType],
+      }),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
         this.mode = "edit";
         this.postId = paramMap.get("postId");
         this.isLoading = true;
-        this.postsService.getPost(this.postId).subscribe(postData => {
+        this.postsService.getPost(this.postId).subscribe((postData) => {
           this.isLoading = false;
           this.singlePost = {
             id: postData._id,
             title: postData.title,
             content: postData.content,
             imagePath: postData.imagePath,
-            creator: postData.creator
+            creator: postData.creator,
           };
           this.form.setValue({
             title: this.singlePost.title,
             content: this.singlePost.content,
-            image: this.singlePost.imagePath
+            image: this.singlePost.imagePath,
           });
         });
       } else {
@@ -81,7 +81,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     if (this.mode === "create") {
-      //sending the title and content to the addPost method in post.service.ts
+      // sending the title and content to the addPost method in post.service.ts
       this.postsService.addPost(
         this.form.value.title,
         this.form.value.content,

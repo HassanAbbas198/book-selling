@@ -10,7 +10,7 @@ import { environment } from "../../environments/environment";
 const BACKEND_URL = environment.apiUrl + "/users/";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
@@ -37,27 +37,29 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(name: string, email: string, password: string) {
+  createUser(name: string, email: string, password: string, confirmPassword) {
     const authData: AuthData = {
       name: name,
       email: email,
-      password: password
+      password: password,
+      confirmPassword: confirmPassword,
     };
     this.http.post(BACKEND_URL + "/signup", authData).subscribe(
       () => {
         this.router.navigate(["/auth/login"]);
       },
-      error => {
+      (error) => {
         this.authStatusListener.next(false);
       }
     );
   }
 
-  login(name: string, email: string, password: string) {
+  login(name: string, email: string, password: string, confirmPassword) {
     const authData: AuthData = {
       name: name,
       email: email,
-      password: password
+      password: password,
+      confirmPassword: confirmPassword,
     };
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
@@ -65,7 +67,7 @@ export class AuthService {
         authData
       )
       .subscribe(
-        response => {
+        (response) => {
           const token = response.token;
           this.token = token;
           if (token) {
@@ -82,11 +84,37 @@ export class AuthService {
             this.router.navigate(["/"]);
           }
         },
-        error => {
+        (error) => {
           this.authStatusListener.next(false);
         }
       );
   }
+
+  resetPassword(email: string) {
+    const data = {
+      email: email,
+    };
+    this.http
+      .post<{ status: string }>(BACKEND_URL + "/resetPassword", data)
+      .subscribe((response) => {
+        const stat = response.status;
+        this.router.navigate(["/"]);
+      });
+  }
+
+  newPassword(cToken: string, password: string) {
+    const data = {
+      cToken: cToken,
+      password: password,
+    };
+    return this.http
+      .post<{ status: string }>(BACKEND_URL + "/newPassword", data)
+      .subscribe((response) => {
+        const stat = response.status;
+        this.router.navigate(["/"]);
+      });
+  }
+
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
@@ -115,19 +143,19 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
-    this.tokenTimer = setTimeout(function() {
+    this.tokenTimer = setTimeout(function () {
       this.logout();
     }, duration);
   }
 
-  //storing our data on the local storage(managed by the browser). so reloading wont affect the token
+  // storing our data on the local storage(managed by the browser). so reloading wont affect the token
   private saveAuthData(token: string, expiration: Date, userId: string) {
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expiration.toISOString());
     localStorage.setItem("userId", userId);
   }
 
-  //clearing the saved data on the local storage
+  // clearing the saved data on the local storage
   private clearAuthData() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
@@ -144,7 +172,7 @@ export class AuthService {
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      userId: userId,
     };
   }
 }

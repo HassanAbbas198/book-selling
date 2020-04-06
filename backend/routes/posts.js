@@ -8,6 +8,7 @@ const fileExtract = require("../middleware/file");
 const PostsController = require("../controllers/posts");
 
 //routes have been filtered by '/api/posts' before reachinng this
+
 //adding a new post
 router.post("", checkAuth, fileExtract, PostsController.createPost);
 

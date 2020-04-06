@@ -1,7 +1,7 @@
 import {
   HttpInterceptor,
   HttpRequest,
-  HttpHandler
+  HttpHandler,
 } from "@angular/common/http";
 
 import { AuthService } from "./auth.service";
@@ -13,9 +13,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authToken = this.authService.getToken();
-    //overriding the authorization header in my request and cloning the updated req to authRequest
+    // overriding the authorization header in my request and cloning the updated req to authRequest
     const authRequest = req.clone({
-      headers: req.headers.set("Authorization", "Bearer " + authToken)
+      headers: req.headers.set("Authorization", "Bearer " + authToken),
     });
     return next.handle(authRequest);
   }

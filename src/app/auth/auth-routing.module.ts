@@ -5,14 +5,18 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
+import { ResetPsswordComponent } from "./resetPassword/reset-password.component";
+import { NewPasswordComponent } from "./new-password/new-password.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
-  { path: "signup", component: SignupComponent }
+  { path: "signup", component: SignupComponent },
+  { path: "resetPassword", component: ResetPsswordComponent },
+  { path: "newPassword/:token", component: NewPasswordComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AuthRoutingModule {}

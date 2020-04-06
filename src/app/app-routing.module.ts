@@ -5,6 +5,7 @@ import { PostCreateComponent } from "./posts/post-create/post-create.component";
 
 import { AuthGuard } from "./auth/auth.guard";
 import { AuthModule } from "./auth/auth.module";
+import { PostDetailsComponent } from "./posts/post-details/post-details.component";
 
 const routes: Routes = [
   { path: "", component: PostListComponent },
@@ -12,18 +13,22 @@ const routes: Routes = [
   {
     path: "edit/:postId",
     component: PostCreateComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "post-details/:postId",
+    component: PostDetailsComponent,
   },
   {
     path: "auth",
     loadChildren: () =>
-      import("./auth/auth.module").then(module => module.AuthModule)
-  }
+      import("./auth/auth.module").then((module) => module.AuthModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard],
 })
 export class AppRoutingModule {}
