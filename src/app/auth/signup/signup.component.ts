@@ -11,7 +11,6 @@ import { AuthService } from "../auth.service";
 export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
-  // passMatch = false;
 
   constructor(public authService: AuthService) {}
 

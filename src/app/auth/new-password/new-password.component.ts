@@ -9,12 +9,13 @@ import { Subscription } from "rxjs";
   templateUrl: "./new-password.component.html",
   styleUrls: ["./new-password.component.css"],
 })
-export class NewPasswordComponent implements OnInit {
+export class NewPasswordComponent implements OnInit, OnDestroy {
   isLoading = false;
   userId: string;
 
   // userIsAuthenticated = false;
   // userId: string;
+  private authStatusSub: Subscription;
 
   constructor(
     public authService: AuthService,
@@ -22,10 +23,14 @@ export class NewPasswordComponent implements OnInit {
     private router: Router
   ) {}
 
-  // private authStatusSub: Subscription;
-
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get("userId");
+
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((authStatus) => {
+        this.isLoading = false;
+      });
     // this.route.paramMap.subscribe((paramMap: ParamMap) => {
     //   if (paramMap.has("userId")) {
     //     this.userId = paramMap.get("userId");
@@ -48,6 +53,14 @@ export class NewPasswordComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.authService.newPassword(this.userId, form.value.password);
+    this.authService.newPassword(
+      this.userId,
+      form.value.password,
+      form.value.confirmPassword
+    );
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }

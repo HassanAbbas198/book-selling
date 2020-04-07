@@ -101,17 +101,22 @@ export class AuthService {
       });
   }
 
-  newPassword(userId: string, password: string) {
+  newPassword(userId: string, password: string, confirmPassword: string) {
     const data = {
       userId: userId,
       password: password,
+      confirmPassword: confirmPassword,
     };
     this.http
       .post<{ status: string }>(BACKEND_URL + "/newPassword/" + userId, data)
-      .subscribe((response) => {
-        const stat = response.status;
-        this.router.navigate(["/"]);
-      });
+      .subscribe(
+        (response) => {
+          this.router.navigate(["/auth/login"]);
+        },
+        (error) => {
+          this.authStatusListener.next(false);
+        }
+      );
   }
 
   autoAuthUser() {

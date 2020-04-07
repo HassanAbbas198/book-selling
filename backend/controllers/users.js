@@ -27,7 +27,6 @@ exports.createUser = (req, res, next) => {
   // gathering all the erros
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors.array());
     return res.status(422).json({
       message: errors.array()[0].msg,
     });
@@ -194,8 +193,15 @@ exports.resetPassword = (req, res, next) => {
 exports.newPassword = (req, res, next) => {
   const userId = req.params.userId;
   const password = req.body.password;
-
   let restUser;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).json({
+      message: errors.array()[0].msg,
+    });
+  }
 
   User.findOne({ _id: userId })
     .then((user) => {
