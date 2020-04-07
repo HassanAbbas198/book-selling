@@ -9,9 +9,9 @@ import { Subscription } from "rxjs";
   templateUrl: "./new-password.component.html",
   styleUrls: ["./new-password.component.css"],
 })
-export class NewPasswordComponent implements OnInit, OnDestroy {
+export class NewPasswordComponent implements OnInit {
   isLoading = false;
-  private cToken: string;
+  userId: string;
 
   // userIsAuthenticated = false;
   // userId: string;
@@ -25,12 +25,13 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
   // private authStatusSub: Subscription;
 
   ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has("token")) {
-        this.cToken = paramMap.get("token");
-      }
-    });
-
+    this.userId = this.route.snapshot.paramMap.get("userId");
+    // this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    //   if (paramMap.has("userId")) {
+    //     this.userId = paramMap.get("userId");
+    //     console.log(this.userId);
+    //   }
+    // });
     // this.userId = this.authService.getUserId();
     // this.userIsAuthenticated = this.authService.getIsAuth();
     // this.authStatusSub = this.authService
@@ -47,10 +48,6 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.authService.newPassword(this.cToken, form.value.password);
-  }
-
-  ngOnDestroy() {
-    // this.authStatusSub.unsubscribe;
+    this.authService.newPassword(this.userId, form.value.password);
   }
 }

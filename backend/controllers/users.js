@@ -119,63 +119,92 @@ exports.userLogin = (req, res, next) => {
 
 exports.resetPassword = (req, res, next) => {
   const email = req.body.email;
-  crypto.randomBytes(32, (err, buffer) => {
-    if (err) {
-      console.log(err);
-      return res.status(401).json({
-        message: "failed!",
-      });
-    }
-    const cryptoToken = buffer.toString("hex");
-    User.findOne({ email: email })
-      .then((user) => {
-        if (!user) {
-          return res.status(401).json({
-            message: "No account with that Email found",
-          });
-        }
-        user.resetToken = cryptoToken;
-        user.resetTokenExpiration = Date.now() + 3600000;
-        return user.save();
-      })
-      .then((result) => {
-        transporter.sendMail({
-          to: email,
-          from: "shop@hassan.com",
-          subject: "Password Reset",
-          html: `
+
+  User.findOne({ email: email })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({
+          message: "No account with that Email found",
+        });
+      }
+      const userId = user._id;
+      transporter.sendMail({
+        to: email,
+        from: "shop@hassan.com",
+        subject: "Password Reset",
+        html: `
           <p>You requested a password reset</p>
-          <p>Click this link <a href="http://localhost:4200/auth/newPassword/${cryptoToken}">reset password</a> to set a new password.</p>
+          <p>Click this link <a href="http://localhost:4200/auth/newPassword/${userId}">reset password</a> to set a new password.</p>
           `,
-        });
-        return res.status(200).json({
-          status: "Success!",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
       });
-  });
+      return res.status(200).json({
+        status: "Success!",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: "Invalid!",
+      });
+    });
 };
 
-exports.newPassword = (req, res, next) => {
-  const cToken = req.body.cToken;
-  const password = req.body.password;
-  let resetUser;
+// exports.resetPassword = (req, res, next) => {
+//   const email = req.body.email;
+//   const userId = "";
+//   // crypto.randomBytes(32, (err, buffer) => {
+//   //   if (err) {
+//   //     console.log(err);
+//   //     return res.status(401).json({
+//   //       message: "failed!",
+//   //     });
+//   //   }
+//   //   const cryptoToken = buffer.toString("hex");
+//   //   console.log(cryptoToken);
+//   User.findOne({ email: email })
+//     .then((user) => {
+//       if (!user) {
+//         return res.status(401).json({
+//           message: "No account with that Email found",
+//         });
+//       }
+//       // user.resetToken = cryptoToken;
+//       // user.resetTokenExpiration = Date.now() + 3600000;
+//       // return user.save();
+//       userId = user._id;
+//     })
+//     .then((result) => {
+//       transporter.sendMail({
+//         to: email,
+//         from: "shop@hassan.com",
+//         subject: "Password Reset",
+//         html: `
+//     <p>You requested a password reset</p>
+//     <p>Click this link <a href="http://localhost:4200/auth/newPassword/${userId}">reset password</a> to set a new password.</p>
+//     `,
+//       });
+//       return res.status(200).json({
+//         status: "Success!",
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
-  User.findOne({
-    resetToken: cToken,
-    resetTokenExpiration: { $gt: Date.now() },
-  })
+exports.newPassword = (req, res, next) => {
+  const userId = req.params.userId;
+  const password = req.body.password;
+
+  let restUser;
+
+  User.findOne({ _id: userId })
     .then((user) => {
-      resetUser = user;
+      restUser = user;
       return bcrypt.hash(password, 12);
     })
     .then((hashedPassword) => {
-      resetUser.password = hashedPassword;
-      resetUser.resetToken = undefined;
-      resetUser.resetTokenExpiration = undefined;
-      return resetUser.save();
+      restUser.password = hashedPassword;
+      return restUser.save();
     })
     .then((result) => {
       res.status(200).json({
@@ -183,8 +212,34 @@ exports.newPassword = (req, res, next) => {
       });
     })
     .catch((err) => {
-      return res.status(401).json({
-        message: "Reset time expired. Try again!",
+      res.status(401).json({
+        message: "Invalid!",
       });
     });
 };
+
+// exports.newPassword = (req, res, next) => {
+//   const userId = req.params.userId;
+//   const password = req.body.password;
+//   let resetUser;
+
+//   User.findOne({ _id: userId })
+//     .then((user) => {
+//       resetUser = user;
+//       return bcrypt.hash(password, 12);
+//     })
+//     .then((hashedPassword) => {
+//       resetUser.password = hashedPassword;
+//       return resetUser.save();
+//     })
+//     .then((result) => {
+//       res.status(200).json({
+//         message: "Password updated succesfully!",
+//       });
+//     })
+//     .catch((err) => {
+//       return res.status(401).json({
+//         message: "Reset time expired. Try again!",
+//       });
+//     });
+// };

@@ -1,5 +1,4 @@
 // this is called lazy loading, when we dont really need to load everything upfront
-
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
@@ -12,7 +11,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
   { path: "resetPassword", component: ResetPsswordComponent },
-  { path: "newPassword/:token", component: NewPasswordComponent },
+  { path: "newPassword/:userId", component: NewPasswordComponent },
 ];
 
 @NgModule({

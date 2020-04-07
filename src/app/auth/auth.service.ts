@@ -97,18 +97,17 @@ export class AuthService {
     this.http
       .post<{ status: string }>(BACKEND_URL + "/resetPassword", data)
       .subscribe((response) => {
-        const stat = response.status;
         this.router.navigate(["/"]);
       });
   }
 
-  newPassword(cToken: string, password: string) {
+  newPassword(userId: string, password: string) {
     const data = {
-      cToken: cToken,
+      userId: userId,
       password: password,
     };
-    return this.http
-      .post<{ status: string }>(BACKEND_URL + "/newPassword", data)
+    this.http
+      .post<{ status: string }>(BACKEND_URL + "/newPassword/" + userId, data)
       .subscribe((response) => {
         const stat = response.status;
         this.router.navigate(["/"]);
