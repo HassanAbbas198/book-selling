@@ -7,21 +7,21 @@ const fileExtract = require("../middleware/file");
 
 const PostsController = require("../controllers/posts");
 
-//routes have been filtered by '/api/posts' before reachinng this
+// routes have been filtered by '/api/posts' before reachinng this
 
-//adding a new post
+// adding a new post
 router.post("", checkAuth, fileExtract, PostsController.createPost);
 
-//getting all posts
+// getting all posts
 router.get("", PostsController.getPosts);
 
-//getting a single post
+// getting a single post
 router.get("/:id", PostsController.getPost);
 
-//editing a post
+// editing a post
 router.put("/:id", checkAuth, fileExtract, PostsController.updatePost);
 
-//delete a selected post
+// delete a selected post
 router.delete("/:id", checkAuth, PostsController.deletePost);
 
 module.exports = router;
