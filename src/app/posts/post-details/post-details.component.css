@@ -10,3 +10,7 @@
 .mat-card-header {
   padding-bottom: 7px;
 }
+
+mat-spinner {
+  margin: auto;
+}

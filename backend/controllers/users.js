@@ -57,7 +57,11 @@ exports.createUser = (req, res, next) => {
           to: email,
           from: "shop@hassan.com",
           subject: "Signup succeeded!",
-          html: "<h1>You successfully signed up!</h1>",
+          html: `
+          <h1>Welcome, ${name}! </h1>
+          <p>Glad to have you on board.</p>
+          <p>Thank you for signing up</p>
+          `,
         })
         .catch((err) => {
           console.log(err);
@@ -132,8 +136,10 @@ exports.resetPassword = (req, res, next) => {
         from: "shop@hassan.com",
         subject: "Password Reset",
         html: `
+          <p>Dear user,</p>
           <p>You requested a password reset</p>
-          <p>Click this link <a href="http://localhost:4200/auth/newPassword/${userId}">reset password</a> to set a new password.</p>
+          <p>Click the following link <a href="http://localhost:4200/auth/newPassword/${userId}">reset password</a> to set a new password.</p>
+          <p>Thank you!</p>
           `,
       });
       return res.status(200).json({
@@ -146,49 +152,6 @@ exports.resetPassword = (req, res, next) => {
       });
     });
 };
-
-// exports.resetPassword = (req, res, next) => {
-//   const email = req.body.email;
-//   const userId = "";
-//   // crypto.randomBytes(32, (err, buffer) => {
-//   //   if (err) {
-//   //     console.log(err);
-//   //     return res.status(401).json({
-//   //       message: "failed!",
-//   //     });
-//   //   }
-//   //   const cryptoToken = buffer.toString("hex");
-//   //   console.log(cryptoToken);
-//   User.findOne({ email: email })
-//     .then((user) => {
-//       if (!user) {
-//         return res.status(401).json({
-//           message: "No account with that Email found",
-//         });
-//       }
-//       // user.resetToken = cryptoToken;
-//       // user.resetTokenExpiration = Date.now() + 3600000;
-//       // return user.save();
-//       userId = user._id;
-//     })
-//     .then((result) => {
-//       transporter.sendMail({
-//         to: email,
-//         from: "shop@hassan.com",
-//         subject: "Password Reset",
-//         html: `
-//     <p>You requested a password reset</p>
-//     <p>Click this link <a href="http://localhost:4200/auth/newPassword/${userId}">reset password</a> to set a new password.</p>
-//     `,
-//       });
-//       return res.status(200).json({
-//         status: "Success!",
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 
 exports.newPassword = (req, res, next) => {
   const userId = req.params.userId;
@@ -223,29 +186,3 @@ exports.newPassword = (req, res, next) => {
       });
     });
 };
-
-// exports.newPassword = (req, res, next) => {
-//   const userId = req.params.userId;
-//   const password = req.body.password;
-//   let resetUser;
-
-//   User.findOne({ _id: userId })
-//     .then((user) => {
-//       resetUser = user;
-//       return bcrypt.hash(password, 12);
-//     })
-//     .then((hashedPassword) => {
-//       resetUser.password = hashedPassword;
-//       return resetUser.save();
-//     })
-//     .then((result) => {
-//       res.status(200).json({
-//         message: "Password updated succesfully!",
-//       });
-//     })
-//     .catch((err) => {
-//       return res.status(401).json({
-//         message: "Reset time expired. Try again!",
-//       });
-//     });
-// };
