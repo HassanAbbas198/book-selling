@@ -31,28 +31,13 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
       .subscribe((authStatus) => {
         this.isLoading = false;
       });
-    // this.route.paramMap.subscribe((paramMap: ParamMap) => {
-    //   if (paramMap.has("userId")) {
-    //     this.userId = paramMap.get("userId");
-    //     console.log(this.userId);
-    //   }
-    // });
-    // this.userId = this.authService.getUserId();
-    // this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authStatusSub = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe((isAuthenticated) => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //     this.userId = this.authService.getUserId();
-    //   });
-    // console.log(this.userId);
   }
 
   onUpdate(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    this.isLoading = true;
+    // this.isLoading = true;
     this.authService.newPassword(
       this.userId,
       form.value.password,

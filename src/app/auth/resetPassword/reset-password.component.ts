@@ -17,7 +17,7 @@ export class ResetPsswordComponent {
     if (form.invalid) {
       return;
     }
-    this.isLoading = true;
+    // this.isLoading = true;
     this.authService.resetPassword(form.value.email);
   }
 }
