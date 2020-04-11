@@ -19,7 +19,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
-  //for pagination
+  // for pagination
   totalPosts = 0;
   postsPerPage = 4;
   currentPage = 1;

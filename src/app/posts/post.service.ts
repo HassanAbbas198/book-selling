@@ -37,13 +37,15 @@ export class PostService {
                 id: post._id,
                 imagePath: post.imagePath,
                 creator: post.creator,
+                creatorName: post.creator.name,
+                date: new Date(post.createdAt).toLocaleDateString("en-US"),
               };
             }),
             maxPosts: postData.maxPosts,
           };
         })
       )
-      //transformedposts is the returned value of the pipe.. we tranformed it to get the id
+      // transformedposts is the returned value of the pipe.. we tranformed it to get the id
       .subscribe((transformedPostData) => {
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
@@ -58,18 +60,19 @@ export class PostService {
   }
 
   getPost(id: string) {
-    /*this will return the observable we're getting from the httpClient
-    so we can subscribe in the component*/
+    /* this will return the observable we're getting from the httpClient
+    so we can subscribe in the component */
     return this.http.get<{
       _id: string;
       title: string;
       content: string;
       imagePath: string;
-      creator: string;
+      creatorId: string;
+      creatorName: string;
+      date: Date;
     }>(BACKEND_URL + id);
   }
 
-  // adding post method taking title, content, img as arguments
   addPost(title: string, content: string, image: File) {
     const postData = new FormData();
     postData.append("title", title);
@@ -102,7 +105,9 @@ export class PostService {
         title: title,
         content: content,
         imagePath: image,
-        creator: null,
+        creatorId: null,
+        creatorName: null,
+        date: null,
       };
     }
     this.http.put(BACKEND_URL + id, postData).subscribe((response) => {

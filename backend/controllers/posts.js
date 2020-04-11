@@ -35,7 +35,7 @@ exports.getPosts = async (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   // Post.find() return the documents of the Post model
-  const postQuery = Post.find();
+  const postQuery = Post.find().populate("creator");
   // url : http://localhost:3000/api/posts?pagesize=3&page=1
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -59,11 +59,19 @@ exports.getPosts = async (req, res, next) => {
 exports.getPost = async (req, res, next) => {
   const postId = req.params.id;
   try {
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("creator");
     if (!post) {
       res.status(404).json({ message: "Post not found" });
     }
-    res.status(200).json(post);
+    res.status(200).json({
+      _id: post._id,
+      title: post.title,
+      content: post.content,
+      imagePath: post.imagePath,
+      creatorId: post.creator._id,
+      creatorName: post.creator.name,
+      date: new Date(post.createdAt).toLocaleDateString("en-US"),
+    });
   } catch (error) {
     res.status(500).json({
       message: "Failed to fetch a post!",

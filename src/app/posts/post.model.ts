@@ -1,8 +1,10 @@
-//creating a Post interface
+// creating a Post interface
 export interface Post {
   id: string;
   title: string;
   content: string;
   imagePath: string;
-  creator: string;
+  creatorId: string;
+  creatorName: string | any;
+  date: Date | any;
 }

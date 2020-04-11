@@ -1,56 +1,3 @@
-<!-- <mat-accordion multi="true">
-  <mat-tab-group>
-    <mat-tab label="All posts">
-      <mat-spinner *ngIf="isLoading"></mat-spinner>
-      <mat-accordion *ngIf="posts.length > 0 && !isLoading">
-        <mat-expansion-panel *ngFor="let post of posts">
-          <mat-expansion-panel-header>
-            {{ post.title }}
-          </mat-expansion-panel-header>
-          <div class="post-image">
-            <img [src]="post.imagePath" [alt]="post.title" />
-          </div>
-          <p>{{ post.content }}</p>
-          <mat-action-row
-            *ngIf="userIsAuthenticated && userId === post.creator"
-          >
-            <a mat-button color="primary" [routerLink]="['/edit', post.id]"
-              >Edit</a
-            >
-            <button mat-button color="warn" (click)="onDelete(post.id)">
-              Delete
-            </button>
-          </mat-action-row>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-tab>
-
-    <mat-tab label="My posts">
-      <mat-spinner *ngIf="isLoading"></mat-spinner>
-      <mat-accordion *ngIf="posts.length > 0 && !isLoading">
-        <mat-expansion-panel *ngFor="let post of posts">
-          <mat-expansion-panel-header>
-            {{ post.title }}
-          </mat-expansion-panel-header>
-          <div class="post-image">
-            <img [src]="post.imagePath" [alt]="post.title" />
-          </div>
-          <p>{{ post.content }}</p>
-          <mat-action-row
-            *ngIf="userIsAuthenticated && userId === post.creator"
-          >
-            <a mat-button color="primary" [routerLink]="['/edit', post.id]"
-              >Edit</a
-            >
-            <button mat-button color="warn" (click)="onDelete(post.id)">
-              Delete
-            </button>
-          </mat-action-row>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-tab>
-  </mat-tab-group>
- -->
 <main class="main-class">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <div class="grid" *ngIf="posts.length > 0 && !isLoading">
@@ -58,6 +5,9 @@
       <mat-card-header>
         <!-- <div mat-card-avatar class="post-header-image"></div> -->
         <mat-card-title class="card-title">{{ post.title }}</mat-card-title>
+        <mat-card-subtitle class="card-subtitle"
+          >Posted by: {{ post.creatorName }}
+        </mat-card-subtitle>
       </mat-card-header>
       <img
         class="post-image img"

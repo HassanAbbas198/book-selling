@@ -39,13 +39,18 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
             title: postData.title,
             content: postData.content,
             imagePath: postData.imagePath,
-            creator: postData.creator,
+            creatorId: postData.creatorId,
+            creatorName: postData.creatorName,
+            date: postData.date,
           };
         });
       }
     });
 
     this.userId = this.authService.getUserId();
+
+    console.log(this.userId);
+
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()

@@ -12,5 +12,5 @@ const userSchema = mongoose.Schema({
 
 userSchema.plugin(uniqueValidator);
 
-//exporting it. so I can use it with **User** model
+// exporting it. so I can use it with **User** model
 module.exports = mongoose.model("User", userSchema);
