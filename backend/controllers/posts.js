@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+
 const Post = require("../models/post");
 
 exports.createPost = async (req, res, next) => {
@@ -35,7 +38,7 @@ exports.getPosts = async (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   // Post.find() return the documents of the Post model
-  const postQuery = Post.find().populate("creator");
+  const postQuery = Post.find().sort({ createdAt: -1 }).populate("creator");
   // url : http://localhost:3000/api/posts?pagesize=3&page=1
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -116,6 +119,8 @@ exports.updatePost = async (req, res, next) => {
 exports.deletePost = async (req, res, next) => {
   const postId = req.params.id;
   try {
+    // const post = await Post.findById(postId);
+    // clearImage("http://localhost:3000/images/aaa-1586637928505.jpg");
     const result = await Post.deleteOne({
       _id: postId,
       creator: req.userData.userId,
@@ -135,3 +140,8 @@ exports.deletePost = async (req, res, next) => {
     });
   }
 };
+
+// const clearImage = (filePath) => {
+//   filePath = path.join(__dirname, "..", filePath);
+//   fs.unlink(filePath, (err) => console.log(err));
+// };

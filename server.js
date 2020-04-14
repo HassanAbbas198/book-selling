@@ -2,7 +2,7 @@ const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
 
-const normalizePort = val => {
+const normalizePort = (val) => {
   let port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -18,7 +18,7 @@ const normalizePort = val => {
   return false;
 };
 
-const onError = error => {
+const onError = (error) => {
   if (error.syscall != "listen") {
     throw error;
   }
@@ -52,4 +52,9 @@ const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
 
-server.listen(port);
+const ser = server.listen(port);
+
+const io = require("socket.io")(ser);
+io.on("connection", (socket) => {
+  console.log("Client connected");
+});
