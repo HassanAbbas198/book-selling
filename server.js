@@ -52,9 +52,4 @@ const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
 
-const ser = server.listen(port);
-
-const io = require("socket.io")(ser);
-io.on("connection", (socket) => {
-  console.log("Client connected");
-});
+server.listen(port);

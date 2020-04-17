@@ -8,7 +8,7 @@
 /bazel-out
 
 # dependencies
-/node_modules
+node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -32,6 +32,8 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
+backend/access.log
+*.log
 /.sass-cache
 /connect.lock
 /coverage
