@@ -78,7 +78,7 @@ export class PostService {
     postData.append("title", title);
     postData.append("content", content);
     postData.append("image", image, title);
-    //sending a POST request to app.js
+    // sending a POST request to app.js
     this.http
       .post<{ message: string; post: Post }>(BACKEND_URL, postData)
       .subscribe((responseData) => {

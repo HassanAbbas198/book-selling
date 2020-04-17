@@ -48,7 +48,7 @@ mat-paginator {
   margin: auto;
 }
 
-.grid {
+.container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
