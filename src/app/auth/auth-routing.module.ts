@@ -4,7 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
-import { ResetPsswordComponent } from "./resetPassword/reset-password.component";
+import { ResetPsswordComponent } from "./reset-password/reset-password.component";
 import { NewPasswordComponent } from "./new-password/new-password.component";
 
 const routes: Routes = [
