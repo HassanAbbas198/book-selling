@@ -14,6 +14,9 @@ import { AuthService } from "src/app/auth/auth.service";
   styleUrls: ["./post-create.component.css"],
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
+  favoriteSeason: string;
+  seasons: string[] = ["Winter", "Spring", "Summer", "Autumn"];
+
   private mode = "create";
   private postId: string;
   singlePost: Post;
@@ -41,6 +44,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.minLength(3)],
       }),
       content: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      price: new FormControl(null, {
         validators: [Validators.required],
       }),
       image: new FormControl(null, {
