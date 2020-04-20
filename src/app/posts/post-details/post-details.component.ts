@@ -48,9 +48,6 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.userId = this.authService.getUserId();
-
-    console.log(this.userId);
-
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
