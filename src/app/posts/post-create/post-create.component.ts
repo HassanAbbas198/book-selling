@@ -46,9 +46,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       content: new FormControl(null, {
         validators: [Validators.required],
       }),
-      price: new FormControl(null, {
-        validators: [Validators.required],
-      }),
+      // price: new FormControl(null, {
+      //   validators: [Validators.required],
+      // }),
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType],
