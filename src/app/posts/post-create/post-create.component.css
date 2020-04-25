@@ -19,3 +19,14 @@ input[type="file"] {
 .image-preview img {
   height: 100%;
 }
+
+.container {
+  width: 300px;
+  margin-top: 50px;
+}
+
+@media (min-width: 600px) {
+  .container {
+    width: 600px;
+  }
+}

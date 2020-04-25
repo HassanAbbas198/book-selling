@@ -2,15 +2,31 @@
   max-width: 100%;
 }
 
-.post-header-image {
+/* .post-header-image {
   background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   background-size: cover;
-}
+} */
 
 .mat-card-header {
   padding-bottom: 7px;
 }
 
+.post-image {
+  width: 100%;
+  margin: auto;
+}
+
 mat-spinner {
   margin: auto;
+}
+
+.container {
+  width: 300px;
+  margin-top: 50px;
+}
+
+@media (min-width: 600px) {
+  .container {
+    width: 750px;
+  }
 }

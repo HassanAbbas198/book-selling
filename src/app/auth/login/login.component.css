@@ -10,8 +10,13 @@ mat-spinner {
   text-decoration: none;
 }
 
-/* .reset-password a:hover,
-.reset-password a:active {
-  background: blue;
-  color: white;
-} */
+.container {
+  width: 300px;
+  margin-top: 50px;
+}
+
+@media (min-width: 600px) {
+  .container {
+    width: 500px;
+  }
+}
