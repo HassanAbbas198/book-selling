@@ -34,6 +34,7 @@ export class PostService {
               return {
                 title: post.title,
                 content: post.content,
+                price: post.price,
                 id: post._id,
                 imagePath: post.imagePath,
                 creator: post.creator,
@@ -66,6 +67,7 @@ export class PostService {
       _id: string;
       title: string;
       content: string;
+      price: number;
       imagePath: string;
       creatorId: string;
       creatorName: string;
@@ -73,10 +75,11 @@ export class PostService {
     }>(BACKEND_URL + id);
   }
 
-  addPost(title: string, content: string, image: File) {
+  addPost(title: string, content: string, price: any, image: File) {
     const postData = new FormData();
     postData.append("title", title);
     postData.append("content", content);
+    postData.append("price", price);
     postData.append("image", image, title);
     // sending a POST request to app.js
     this.http
@@ -91,19 +94,27 @@ export class PostService {
     return this.http.delete(BACKEND_URL + postId);
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string) {
+  updatePost(
+    id: string,
+    title: string,
+    content: string,
+    price: any,
+    image: File | string
+  ) {
     let postData: Post | FormData;
     if (typeof image === "object") {
       postData = new FormData();
       postData.append("id", id);
       postData.append("title", title);
       postData.append("content", content);
+      postData.append("price", price);
       postData.append("image", image, title);
     } else {
       postData = {
         id: id,
         title: title,
         content: content,
+        price: price,
         imagePath: image,
         creatorId: null,
         creatorName: null,

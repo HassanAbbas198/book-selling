@@ -1,4 +1,4 @@
-const fs = require("fs");
+// const fs = require("fs");
 const path = require("path");
 
 const express = require("express");
@@ -6,20 +6,20 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
 const compression = require("compression");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 const app = express();
 
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "access.log"),
-  {
-    flags: "a",
-  }
-);
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, "access.log"),
+//   {
+//     flags: "a",
+//   }
+//   );
+// app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(helmet());
 app.use(compression());
-app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join("backend/images")));

@@ -16,13 +16,21 @@
   margin: auto;
 }
 
+.post-content {
+  margin: 10px;
+}
+
+.post-price {
+  margin: 10px;
+}
+
 mat-spinner {
   margin: auto;
 }
 
 .container {
   width: 300px;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 @media (min-width: 600px) {

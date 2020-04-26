@@ -11,6 +11,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatRadioModule } from "@angular/material/radio";
+import { MatDividerModule } from "@angular/material/divider";
 
 @NgModule({
   exports: [
@@ -26,6 +27,7 @@ import { MatRadioModule } from "@angular/material/radio";
     MatDialogModule,
     MatTabsModule,
     MatRadioModule,
+    MatDividerModule,
   ],
 })
 export class AngularMaterialModule {}

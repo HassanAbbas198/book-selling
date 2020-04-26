@@ -46,9 +46,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       content: new FormControl(null, {
         validators: [Validators.required],
       }),
-      // price: new FormControl(null, {
-      //   validators: [Validators.required],
-      // }),
+      price: new FormControl(null, {
+        validators: [Validators.required],
+      }),
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType],
@@ -65,6 +65,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
             id: postData._id,
             title: postData.title,
             content: postData.content,
+            price: postData.price,
             imagePath: postData.imagePath,
             creatorId: postData.creatorId,
             creatorName: postData.creatorName,
@@ -73,6 +74,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
           this.form.setValue({
             title: this.singlePost.title,
             content: this.singlePost.content,
+            price: this.singlePost.price,
             image: this.singlePost.imagePath,
           });
         });
@@ -93,6 +95,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       this.postsService.addPost(
         this.form.value.title,
         this.form.value.content,
+        this.form.value.price,
         this.form.value.image
       );
     } else {
@@ -100,6 +103,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.postId,
         this.form.value.title,
         this.form.value.content,
+        this.form.value.price,
         this.form.value.image
       );
     }

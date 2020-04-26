@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+// const fs = require("fs");
+// const path = require("path");
 
 const Post = require("../models/post");
 
@@ -8,6 +8,7 @@ exports.createPost = async (req, res, next) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
+    price: req.body.price,
     imagePath: url + "/images/" + req.file.filename,
     // userData is the field we added in the check-auth file
     creator: req.userData.userId,
@@ -22,6 +23,7 @@ exports.createPost = async (req, res, next) => {
       post: {
         id: createdPost._id,
         title: createdPost.title,
+        price: createdPost.price,
         content: createdPost.content,
         imagePath: createdPost.imagePath,
       },
@@ -70,6 +72,7 @@ exports.getPost = async (req, res, next) => {
       _id: post._id,
       title: post.title,
       content: post.content,
+      price: post.price,
       imagePath: post.imagePath,
       creatorId: post.creator._id,
       creatorName: post.creator.name,
@@ -91,6 +94,7 @@ exports.updatePost = async (req, res, next) => {
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
+    price: req.body.price,
     content: req.body.content,
     imagePath: imagePath,
     creator: req.userData.userId,

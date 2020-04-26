@@ -16,11 +16,18 @@
         [alt]="singlePost.title"
       />
     </div>
+
     <mat-card-content>
-      <p>
-        {{ singlePost.content }}
-      </p>
+      <div>
+        <p class="post-price">
+          Price:
+          {{ singlePost.price }} LBP
+        </p>
+        <hr />
+        <p class="post-content">{{ singlePost.content }}</p>
+      </div>
     </mat-card-content>
+
     <mat-card-actions
       *ngIf="userIsAuthenticated && userId == singlePost.creatorId"
     >

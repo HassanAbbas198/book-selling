@@ -38,6 +38,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
             id: postData._id,
             title: postData.title,
             content: postData.content,
+            price: postData.price,
             imagePath: postData.imagePath,
             creatorId: postData.creatorId,
             creatorName: postData.creatorName,
