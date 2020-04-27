@@ -14,9 +14,6 @@ import { AuthService } from "src/app/auth/auth.service";
   styleUrls: ["./post-create.component.css"],
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
-  favoriteSeason: string;
-  seasons: string[] = ["Winter", "Spring", "Summer", "Autumn"];
-
   private mode = "create";
   private postId: string;
   singlePost: Post;

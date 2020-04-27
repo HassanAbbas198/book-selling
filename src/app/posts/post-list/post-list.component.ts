@@ -19,6 +19,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
+  isFavorite = false;
+  favToolTip = "Add to favorites";
+
   // for pagination
   totalPosts = 0;
   postsPerPage = 4;
@@ -47,6 +50,16 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
+  }
+
+  onFavorite(postId: string) {
+    if (this.isFavorite) {
+      this.isFavorite = false;
+      this.favToolTip = "Add to favorites";
+    } else {
+      this.isFavorite = true;
+      this.favToolTip = "Remove from favorites";
+    }
   }
 
   ngOnDestroy() {

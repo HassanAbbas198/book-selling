@@ -12,6 +12,8 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
   exports: [
@@ -28,6 +30,8 @@ import { MatDividerModule } from "@angular/material/divider";
     MatTabsModule,
     MatRadioModule,
     MatDividerModule,
+    MatTooltipModule,
+    MatSnackBarModule,
   ],
 })
 export class AngularMaterialModule {}

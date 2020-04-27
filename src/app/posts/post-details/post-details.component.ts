@@ -18,6 +18,9 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   userId: string;
 
+  isFavorite = false;
+  favToolTip = "Add to favorites";
+
   private authStatusSub: Subscription;
 
   constructor(
@@ -68,6 +71,16 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     );
+  }
+
+  onFavorite(postId: string) {
+    if (this.isFavorite) {
+      this.isFavorite = false;
+      this.favToolTip = "Add to favorites";
+    } else {
+      this.isFavorite = true;
+      this.favToolTip = "Remove from favorites";
+    }
   }
 
   ngOnDestroy() {

@@ -29,9 +29,26 @@ mat-paginator {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
+.fav-button {
+  color: silver;
+}
+
+.fav-button-clicked {
+  color: #3f51b5;
+}
+
 @media (min-width: 750px) {
   .post-card {
     max-width: 340px;
+  }
+  .fav-button {
+    margin-left: 75%;
+    position: absolute;
+  }
+  .fav-button-clicked {
+    margin-left: 75%;
+    position: absolute;
+    color: #3f51b5;
   }
 }
 

@@ -2,11 +2,23 @@
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <mat-card class="post-card" *ngIf="!isLoading && singlePost">
     <mat-card-header>
+      <button
+        [ngClass]="isFavorite ? 'fav-button-clicked' : 'fav-button'"
+        mat-icon-button
+        [matTooltip]="favToolTip"
+        matTooltipPosition="left"
+        aria-label="Example icon-button with a heart icon"
+        (click)="onFavorite(singlePost.id)"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
+
       <!-- <div mat-card-avatar class="post-header-image"></div> -->
       <mat-card-title>{{ singlePost.title }}</mat-card-title>
       <mat-card-subtitle
-        >Posted by: {{ singlePost.creatorName }} at {{ singlePost.date }}
+        >Posted by: {{ singlePost.creatorName }}
       </mat-card-subtitle>
+      <mat-card-subtitle> {{ singlePost.date }} </mat-card-subtitle>
     </mat-card-header>
     <div>
       <img
@@ -16,7 +28,6 @@
         [alt]="singlePost.title"
       />
     </div>
-
     <mat-card-content>
       <div>
         <p class="post-price">

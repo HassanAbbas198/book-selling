@@ -1,3 +1,7 @@
+mat-spinner {
+  margin: auto;
+}
+
 .post-card {
   max-width: 100%;
 }
@@ -24,17 +28,30 @@
   margin: 10px;
 }
 
-mat-spinner {
-  margin: auto;
-}
-
 .container {
   width: 300px;
   margin-top: 20px;
 }
 
+.fav-button {
+  color: silver;
+}
+
+.fav-button-clicked {
+  color: #3f51b5;
+}
+
 @media (min-width: 600px) {
   .container {
     width: 750px;
+  }
+  .fav-button {
+    margin-left: 88%;
+    position: absolute;
+  }
+  .fav-button-clicked {
+    margin-left: 88%;
+    position: absolute;
+    color: #3f51b5;
   }
 }

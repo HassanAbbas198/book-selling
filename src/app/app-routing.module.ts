@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { PostListComponent } from "./posts/post-list/post-list.component";
-import { PostCreateComponent } from "./posts/post-create/post-create.component";
 
 import { AuthGuard } from "./auth/auth.guard";
 import { AuthModule } from "./auth/auth.module";
+
+import { PostListComponent } from "./posts/post-list/post-list.component";
+import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { PostDetailsComponent } from "./posts/post-details/post-details.component";
 
 const routes: Routes = [
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: "post-details/:postId",
     component: PostDetailsComponent,
+  },
+  {
+    path: "favorites",
+    component: PostListComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "auth",
