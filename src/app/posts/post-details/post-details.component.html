@@ -20,7 +20,7 @@
       <mat-card-subtitle
         >Posted by: {{ singlePost.creatorName }}
       </mat-card-subtitle>
-      <mat-card-subtitle> {{ isFavorite }} </mat-card-subtitle>
+      <mat-card-subtitle> {{ singlePost.date }} </mat-card-subtitle>
     </mat-card-header>
     <div>
       <img
@@ -44,12 +44,21 @@
     <mat-card-actions
       *ngIf="userIsAuthenticated && userId == singlePost.creatorId"
     >
-      <a mat-button color="primary" [routerLink]="['/edit', singlePost.id]"
-        >Edit</a
-      >
-      <button mat-button color="warn" (click)="onDelete(singlePost.id)">
-        Delete
-      </button>
+      <div class="post-btn">
+        <a
+          mat-stroked-button
+          color="primary"
+          [routerLink]="['/edit', singlePost.id]"
+          >Edit</a
+        >
+        <button
+          mat-stroked-button
+          color="warn"
+          (click)="onDelete(singlePost.id)"
+        >
+          Delete
+        </button>
+      </div>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -6,6 +6,11 @@ a {
   text-decoration: none;
 }
 
+.post-btn {
+  margin-left: 1.5%;
+  margin-bottom: 1.5%;
+}
+
 .post-card {
   max-width: 100%;
 }
@@ -35,6 +40,7 @@ a {
 .container {
   width: 300px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 600px) {

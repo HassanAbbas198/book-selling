@@ -57,6 +57,9 @@
           matInput
           formControlName="content"
           placeholder="Post content"
+          rows="6"
+          cols="30"
+          wrap="hard"
         ></textarea>
         <mat-error *ngIf="form.get('content').invalid"
           >Please enter a post content</mat-error

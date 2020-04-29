@@ -52,15 +52,15 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
   }
 
-  onFavorite(postId: string) {
-    if (this.isFavorite) {
-      this.isFavorite = false;
-      this.favToolTip = "Add to favorites";
-    } else {
-      this.isFavorite = true;
-      this.favToolTip = "Remove from favorites";
-    }
-  }
+  // onFavorite(postId: string) {
+  //   if (this.isFavorite) {
+  //     this.isFavorite = false;
+  //     this.favToolTip = "Add to favorites";
+  //   } else {
+  //     this.isFavorite = true;
+  //     this.favToolTip = "Remove from favorites";
+  //   }
+  // }
 
   ngOnDestroy() {
     this.postsSub.unsubscribe;
