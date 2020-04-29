@@ -2,6 +2,10 @@ mat-spinner {
   margin: auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 .post-card {
   max-width: 100%;
 }
@@ -33,25 +37,12 @@ mat-spinner {
   margin-top: 20px;
 }
 
-.fav-button {
-  color: silver;
-}
-
-.fav-button-clicked {
-  color: #3f51b5;
-}
-
 @media (min-width: 600px) {
   .container {
     width: 750px;
   }
-  .fav-button {
-    margin-left: 88%;
+  .btn {
+    margin-left: 85%;
     position: absolute;
-  }
-  .fav-button-clicked {
-    margin-left: 88%;
-    position: absolute;
-    color: #3f51b5;
   }
 }

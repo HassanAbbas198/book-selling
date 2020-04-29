@@ -24,4 +24,7 @@ router.put("/:id", checkAuth, fileExtract, PostsController.updatePost);
 // delete a selected post
 router.delete("/:id", checkAuth, PostsController.deletePost);
 
+// adding to favorite
+router.patch("/:id", checkAuth, PostsController.addToFavorite);
+
 module.exports = router;

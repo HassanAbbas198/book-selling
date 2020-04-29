@@ -2,6 +2,7 @@
 // const path = require("path");
 
 const Post = require("../models/post");
+const User = require("../models/user");
 
 exports.createPost = async (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
@@ -141,6 +142,53 @@ exports.deletePost = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({
       message: "Couldn't delete post",
+    });
+  }
+};
+
+exports.addToFavorite = async (req, res, next) => {
+  const postId = req.params.id;
+  const isFavorite = req.body.isFavorite;
+  const userId = req.userData.userId;
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      res.status(404).json({ message: "Post not found" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+    }
+    let updatedFavPosts = [...user.favPosts];
+
+    const postIndex = updatedFavPosts.findIndex(
+      (fp) => fp.toString() === post._id.toString()
+    );
+
+    if (postIndex < 0 && isFavorite) {
+      updatedFavPosts.push(post);
+      user.favPosts = updatedFavPosts;
+      await user.save();
+      res.status(200).json({
+        message: "Added to favorites",
+        isFav: true,
+      });
+    } else if (postIndex >= 0 && !isFavorite) {
+      updatedFavPosts = user.favPosts.filter((p) => {
+        return p.toString() !== postId.toString();
+      });
+      user.favPosts = updatedFavPosts;
+      await user.save();
+      res.status(200).json({
+        message: "Removed from favorites",
+        isFav: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Couldn't add to favorites",
     });
   }
 };

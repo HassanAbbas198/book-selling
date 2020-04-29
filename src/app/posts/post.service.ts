@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 
 import { Post } from "./post.model";
 
-import { Subject, pipe } from "rxjs";
+import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
@@ -17,6 +17,9 @@ export class PostService {
   // creating an array of type Post (interface)
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
+
+  private isFav: boolean;
+  private favoriteChanged = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -92,6 +95,28 @@ export class PostService {
   deletePost(postId: string) {
     // we are returning as an Observable and then we can subscribe in the post-list comp
     return this.http.delete(BACKEND_URL + postId);
+  }
+
+  addToFavorite(postId: string, isFavorite: boolean) {
+    const data = {
+      isFavorite: isFavorite,
+    };
+    console.log(data);
+    this.http
+      .patch<{ message: string; isFav: boolean }>(BACKEND_URL + postId, data)
+      .subscribe(
+        (response) => {
+          this.isFav = response.isFav;
+          this.favoriteChanged.next(this.isFav);
+          this.router.navigate([`/post-details/${postId}`]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  getFavoriteChangedListener() {
+    return this.favoriteChanged.asObservable();
   }
 
   updatePost(
