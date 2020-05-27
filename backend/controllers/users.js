@@ -4,20 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const { validationResult } = require("express-validator/check");
 
-// sending emails
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
-
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        "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",
-    },
-  })
-);
-
 const User = require("../models/user");
+const emailService = require("../emails/account");
 
 exports.createUser = async (req, res, next) => {
   const name = req.body.name;
@@ -45,19 +33,12 @@ exports.createUser = async (req, res, next) => {
       password: hashedPassword,
     });
     const result = await newUser.save();
+
+    emailService.welcomeEmail(email, name);
+
     res.status(201).json({
-      message: "User created!",
+      message: "User created !",
       result: result,
-    });
-    transporter.sendMail({
-      to: email,
-      from: "shop@hassan.com",
-      subject: "Signup succeeded!",
-      html: `
-          <h1>Welcome, ${name}! </h1>
-          <p>Glad to have you on board.</p>
-          <p>Thank you for signing up</p>
-          `,
     });
   } catch (error) {
     res.status(500).json({

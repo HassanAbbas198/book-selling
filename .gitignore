@@ -32,7 +32,6 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
-backend/access.log
 *.log
 /.sass-cache
 /connect.lock

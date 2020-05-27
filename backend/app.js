@@ -1,9 +1,9 @@
 // const fs = require("fs");
 const path = require("path");
 
+require("./db/mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const helmet = require("helmet");
 const compression = require("compression");
 // const morgan = require("morgan");
@@ -26,21 +26,6 @@ app.use("/images", express.static(path.join("backend/images")));
 
 const postsRoutes = require("./routes/posts");
 const usersRoutes = require("./routes/users");
-
-// mongodb+srv://hassan:tM75CuxFCBvDKQqA@cluster0-kvm6f.mongodb.net/test?retryWrites=true&w=majority
-// conmecting to mongoDB
-mongoose
-  .connect(
-    "mongodb+srv://hassan:" +
-      process.env.MONGO_ATLAS_PW +
-      "@cluster0-kvm6f.mongodb.net/book-selling?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("Connected to Database");
-  })
-  .catch(() => {
-    console.log("Failed!");
-  });
 
 // fixing the CORS error
 app.use((req, res, next) => {
