@@ -2,19 +2,6 @@
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <mat-card class="post-card" *ngIf="!isLoading && singlePost">
     <mat-card-header>
-      <button
-        [ngClass]="isFavorite ? 'btn btn-primary' : 'btn btn-secondary'"
-        mat-icon-button
-        matTooltip="{{
-          isFavorite ? 'Remove from favorites' : 'Add to favorites'
-        }}"
-        matTooltipPosition="left"
-        aria-label="Example icon-button with a heart icon"
-        (click)="onFavorite(singlePost.id)"
-      >
-        <mat-icon>favorite</mat-icon>
-      </button>
-
       <!-- <div mat-card-avatar class="post-header-image"></div> -->
       <mat-card-title>{{ singlePost.title }}</mat-card-title>
       <mat-card-subtitle

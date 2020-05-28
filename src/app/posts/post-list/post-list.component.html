@@ -2,17 +2,6 @@
 <div class="container" *ngIf="posts.length > 0 && !isLoading">
   <mat-card class="post-card" *ngFor="let post of posts">
     <mat-card-header>
-      <!-- <button
-        [ngClass]="isFavorite ? 'fav-button-clicked' : 'fav-button'"
-        mat-icon-button
-        [matTooltip]="favToolTip"
-        matTooltipPosition="above"
-        aria-label="Example icon-button with a heart icon"
-        (click)="onFavorite(post.id)"
-      >
-        <mat-icon>favorite</mat-icon>
-      </button> -->
-      <!-- <div mat-card-avatar class="post-header-image"></div> -->
       <mat-card-title class="card-title">{{ post.title }}</mat-card-title>
       <mat-card-subtitle class="card-subtitle"
         >Posted by: {{ post.creatorName }} <br />
