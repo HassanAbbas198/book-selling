@@ -1,0 +1,11 @@
+.footer {
+  margin: auto;
+  padding: auto;
+}
+
+mat-toolbar {
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+}
