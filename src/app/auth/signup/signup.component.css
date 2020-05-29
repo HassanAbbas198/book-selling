@@ -6,6 +6,14 @@ mat-spinner {
   margin: auto;
 }
 
+.login {
+  margin-top: 3px;
+}
+
+.login a {
+  text-decoration: none;
+}
+
 .container {
   width: 300px;
   margin-top: 50px;

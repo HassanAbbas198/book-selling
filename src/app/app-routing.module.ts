@@ -7,6 +7,7 @@ import { AuthModule } from "./auth/auth.module";
 import { PostListComponent } from "./posts/post-list/post-list.component";
 import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { PostDetailsComponent } from "./posts/post-details/post-details.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 const routes: Routes = [
   { path: "", component: PostListComponent },
@@ -29,6 +30,10 @@ const routes: Routes = [
     path: "auth",
     loadChildren: () =>
       import("./auth/auth.module").then((module) => module.AuthModule),
+  },
+  {
+    path: "**",
+    component: NotFoundComponent,
   },
 ];
 

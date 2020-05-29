@@ -10,6 +10,14 @@ mat-spinner {
   text-decoration: none;
 }
 
+.sign-up {
+  margin-top: 3px;
+}
+
+.sign-up a {
+  text-decoration: none;
+}
+
 .container {
   width: 300px;
   margin-top: 50px;
