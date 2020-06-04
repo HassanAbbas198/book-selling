@@ -8,7 +8,6 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   resetToken: { type: String },
   resetTokenExpiration: { type: Date },
-  favPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
 userSchema.plugin(uniqueValidator);

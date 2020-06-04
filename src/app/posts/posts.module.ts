@@ -8,6 +8,7 @@ import { PostListComponent } from "./post-list/post-list.component";
 import { PostCreateComponent } from "./post-create/post-create.component";
 import { PostDetailsComponent } from "./post-details/post-details.component";
 import { FooterComponent } from "../footer/footer.component";
+import { SearchComponent } from "../search/search.component";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FooterComponent } from "../footer/footer.component";
     PostListComponent,
     PostDetailsComponent,
     FooterComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,

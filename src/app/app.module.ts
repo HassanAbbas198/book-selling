@@ -10,18 +10,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
 import { ErrorComponent } from "./error/error.component";
-import { SearchComponent } from "./search/search.component";
 
 import { AuthInterceptor } from "./auth/auth-interceptor";
 import { ErrorInterceptor } from "./error-interceptor";
 import { NotFoundComponent } from "./not-found/not-found.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ErrorComponent,
-    SearchComponent,
     NotFoundComponent,
   ],
   imports: [
@@ -32,6 +31,7 @@ import { NotFoundComponent } from "./not-found/not-found.component";
     HttpClientModule,
     AngularMaterialModule,
     PostsModule,
+    FormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
