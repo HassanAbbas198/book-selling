@@ -8,6 +8,8 @@ const helmet = require("helmet");
 const compression = require("compression");
 // const morgan = require("morgan");
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
 // const accessLogStream = fs.createWriteStream(
@@ -45,5 +47,9 @@ app.use((req, res, next) => {
 app.use("/api/posts", postsRoutes);
 app.use("/api/users", usersRoutes);
 
-// exporting the app so we can use it to create server in server.js
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
+
+// // exporting the app so we can use it to create server in server.js
+// module.exports = app;
