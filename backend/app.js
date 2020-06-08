@@ -8,8 +8,6 @@ const helmet = require("helmet");
 const compression = require("compression");
 // const morgan = require("morgan");
 
-const PORT = process.env.PORT || 3000;
-
 const app = express();
 
 // const accessLogStream = fs.createWriteStream(
@@ -24,7 +22,8 @@ app.use(helmet());
 app.use(compression());
 
 app.use(bodyParser.json());
-app.use("/images", express.static(path.join("backend/images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/", express.static(path.join(__dirname, "Angular")));
 
 const postsRoutes = require("./routes/posts");
 const usersRoutes = require("./routes/users");
@@ -46,10 +45,9 @@ app.use((req, res, next) => {
 // redirecting everything with /api/posts path to the routes/posts folder
 app.use("/api/posts", postsRoutes);
 app.use("/api/users", usersRoutes);
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "angular", "index.html"));
 });
 
-// // exporting the app so we can use it to create server in server.js
-// module.exports = app;
+// exporting the app so we can use it to create server in server.js
+module.exports = app;
