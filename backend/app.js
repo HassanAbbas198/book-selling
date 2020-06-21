@@ -22,7 +22,7 @@ app.use(helmet());
 app.use(compression());
 
 app.use(bodyParser.json());
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "../images")));
 
 const postsRoutes = require("./routes/posts");
 const usersRoutes = require("./routes/users");
@@ -43,6 +43,8 @@ app.use((req, res, next) => {
 
 // redirecting everything with /api/posts path to the routes/posts folder
 app.use("/api/posts", postsRoutes);
+
+// redirecting everything with /api/users path to the routes/users folder
 app.use("/api/users", usersRoutes);
 
 // exporting the app so we can use it to create server in server.js

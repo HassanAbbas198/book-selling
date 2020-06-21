@@ -22,3 +22,17 @@ exports.welcomeEmail = (email, name) => {
         `,
   });
 };
+
+exports.resetPassword = (email, userId) => {
+  transporter.sendMail({
+    to: email,
+    from: "shop@hassan.com",
+    subject: "Password Reset",
+    html: `
+          <p>Dear user,</p>
+          <p>You requested a password reset</p>
+          <p>Click the following link <a href="http://localhost:4200/auth/newPassword/${userId}">reset password</a> to set a new password.</p>
+          <p>Thank you!</p>
+          `,
+  });
+};

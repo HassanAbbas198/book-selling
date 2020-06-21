@@ -15,10 +15,10 @@ exports.createPost = async (req, res, next) => {
     creator: req.userData.userId,
   });
   try {
-    // saving the new post using the mongoose .save()
+    // saving the new post using the mongoose.save()
     const createdPost = await post.save();
 
-    // returs a JSON object
+    // returns a JSON object
     res.status(201).json({
       message: "Post added succesfully",
       post: {
@@ -48,7 +48,7 @@ exports.getPosts = async (req, res, next) => {
   }
   try {
     const fetchedPosts = await postQuery;
-    const count = await Post.count();
+    const count = await Post.countDocuments();
 
     res.status(200).json({
       message: "Data fetched succesfully",

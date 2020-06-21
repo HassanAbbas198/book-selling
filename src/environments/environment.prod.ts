@@ -1,4 +1,5 @@
 export const environment = {
-  apiUrl: "http://localhost:3000/api",
+  apiUrl:
+    "http://booksellingintegrated-env.eba-89msm8dp.us-east-2.elasticbeanstalk.com/api",
   production: true,
 };
