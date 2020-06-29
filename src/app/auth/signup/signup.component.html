@@ -30,8 +30,27 @@
           required
           email
         />
+        <small class="form-text text-muted">
+          This site uses Gravatar if you want a profile image, use a Gravatar
+          email
+        </small>
         <mat-error *ngIf="emailInput.invalid"
           >Please enter a valid email</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          name="location"
+          ngModel
+          #locationInput="ngModel"
+          type="text"
+          placeholder="Location"
+          required
+        />
+        <mat-error *ngIf="locationInput.invalid"
+          >Please enter your location</mat-error
         >
       </mat-form-field>
 

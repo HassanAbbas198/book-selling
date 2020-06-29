@@ -39,6 +39,21 @@
       </div>
 
       <mat-form-field>
+        <mat-label>Educational Entity</mat-label>
+        <mat-select (selectionChange)="changeEntity($event.value)">
+          <mat-option *ngFor="let e of entities" [value]="e.value">
+            {{ e.value }}
+          </mat-option> </mat-select
+        >>
+      </mat-form-field>
+      <section class="edu">
+        <p>
+          Your school or university is not in the list?
+          <a routerLink="/entity">Add it</a>
+        </p>
+      </section>
+
+      <mat-form-field>
         <input
           matInput
           type="number"
@@ -46,7 +61,10 @@
           placeholder="Price"
           step="1000"
         />
-        <mat-hint align="start"><strong>Prices in LBP</strong> </mat-hint>
+        <small class="form-text text-muted">
+          Prices in LBP
+        </small>
+        <!-- <mat-hint align="start"><strong></strong> </mat-hint> -->
         <mat-error *ngIf="form.get('price').invalid"
           >Please enter a price</mat-error
         >

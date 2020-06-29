@@ -19,6 +19,8 @@ export class AuthService {
   private isAuthenticated = false;
   private userId: string;
 
+  private loggedInUser: string;
+
   private authStatusListener = new Subject<boolean>();
   private tokenTimer: any;
   getToken() {
@@ -29,6 +31,10 @@ export class AuthService {
     return this.userId;
   }
 
+  getLoggedInUser() {
+    return this.loggedInUser;
+  }
+
   getIsAuth() {
     return this.isAuthenticated;
   }
@@ -37,10 +43,21 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(name: string, email: string, password: string, confirmPassword) {
+  loggedUser() {
+    return this.http.get<{ name: string }>(BACKEND_URL + "/loggedIn");
+  }
+
+  createUser(
+    name: string,
+    email: string,
+    location,
+    password: string,
+    confirmPassword
+  ) {
     const authData: AuthData = {
       name: name,
       email: email,
+      location: location,
       password: password,
       confirmPassword: confirmPassword,
     };
@@ -55,11 +72,9 @@ export class AuthService {
   }
 
   login(name: string, email: string, password: string, confirmPassword) {
-    const authData: AuthData = {
-      name: name,
+    const authData = {
       email: email,
       password: password,
-      confirmPassword: confirmPassword,
     };
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(

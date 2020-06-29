@@ -8,6 +8,8 @@ import { PostListComponent } from "./posts/post-list/post-list.component";
 import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { PostDetailsComponent } from "./posts/post-details/post-details.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
+import { EducationalEntityComponent } from "./educational-entity/educational-entity.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
   { path: "", component: PostListComponent },
@@ -21,6 +23,17 @@ const routes: Routes = [
     path: "post-details/:postId",
     component: PostDetailsComponent,
   },
+
+  {
+    path: "entity",
+    component: EducationalEntityComponent,
+  },
+
+  {
+    path: "profile",
+    component: ProfileComponent,
+  },
+
   {
     path: "favorites",
     component: PostListComponent,

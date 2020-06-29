@@ -7,6 +7,12 @@ import { Post } from "../post.model";
 import { mimeType } from "./mime-type.validator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/auth/auth.service";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
+
+interface Entity {
+  value: string;
+}
 
 @Component({
   selector: "app-post-create",
@@ -19,6 +25,10 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   singlePost: Post;
   isLoading = false;
 
+  BACKEND_URL = environment.apiUrl;
+
+  entities: Entity[] = [];
+
   private authStatusSub: Subscription;
 
   form: FormGroup;
@@ -27,10 +37,19 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   constructor(
     public postsService: PostService,
     public route: ActivatedRoute,
-    public authService: AuthService
+    public authService: AuthService,
+    public http: HttpClient
   ) {}
 
   ngOnInit() {
+    this.http.get(this.BACKEND_URL + "/entities").subscribe((data) => {
+      const test = this.entities.map((e) => {
+        return (e.value = data["name"]);
+      });
+
+      console.log(test);
+    });
+
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe((authStatus) => {
@@ -117,6 +136,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     };
     reader.readAsDataURL(file);
   }
+
+  changeEntity(value) {}
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="addEntity()" *ngIf="!isLoading">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          placeholder="Entity name"
+        />
+        <mat-error *ngIf="form.get('name').invalid"
+          >Please enter an entity name</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="City" formControlName="city" />
+        <mat-error *ngIf="form.get('city').invalid"
+          >Please enter a city name</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Governorate</mat-label>
+        <mat-select (selectionChange)="changeGov($event.value)">
+          <mat-option *ngFor="let g of governorates" [value]="g.value">
+            {{ g.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        *ngIf="!isLoading"
+      >
+        Add educational entity
+      </button>
+    </form>
+  </mat-card>
+</div>

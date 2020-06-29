@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 
 const { validationResult } = require("express-validator");
@@ -10,6 +11,7 @@ const emailService = require("../emails/account");
 exports.createUser = async (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
+  const location = req.body.location;
   const password = req.body.password;
 
   // gathering all the erros
@@ -27,10 +29,19 @@ exports.createUser = async (req, res, next) => {
       });
     }
     const hashedPassword = await bcrypt.hash(password, 12);
+
+    const avatar = gravatar.url(email, {
+      s: "200",
+      r: "pg",
+      d: "mm",
+    });
+
     const newUser = new User({
       name: name,
       email: email,
+      location: location,
       password: hashedPassword,
+      avatar: avatar,
     });
     const result = await newUser.save();
 
@@ -133,6 +144,57 @@ exports.newPassword = async (req, res, next) => {
   } catch (err) {
     res.status(401).json({
       message: "Invalid!",
+    });
+  }
+};
+
+exports.getLoggedInUser = async (req, res, next) => {
+  const userId = req.userData.userId;
+
+  try {
+    const user = await User.findById(userId);
+    const name = user.name;
+
+    res.status(200).json({
+      name,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "something went wrong!",
+    });
+  }
+};
+
+exports.getUser = async (req, res, next) => {
+  const userId = req.userData.userId;
+
+  try {
+    const user = await User.findById(userId);
+
+    res.status(200).json({
+      name: user.name,
+      email: user.email,
+      location: user.location,
+      avatar: user.avatar,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "something went wrong!",
+    });
+  }
+};
+
+exports.deleteAccount = async (req, res, next) => {
+  const userId = req.userData.userId;
+  console.log(userId);
+  try {
+    await User.findOneAndRemove({ _id: userId });
+    res.status(200).json({
+      message: "User deleted successfully!",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "something went wrong!",
     });
   }
 };

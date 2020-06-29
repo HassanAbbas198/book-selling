@@ -6,17 +6,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const compression = require("compression");
-// const morgan = require("morgan");
+
+const Entity = require("./models/entity");
 
 const app = express();
-
-// const accessLogStream = fs.createWriteStream(
-//   path.join(__dirname, "access.log"),
-//   {
-//     flags: "a",
-//   }
-//   );
-// app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(helmet());
 app.use(compression());
@@ -46,6 +39,40 @@ app.use("/api/posts", postsRoutes);
 
 // redirecting everything with /api/users path to the routes/users folder
 app.use("/api/users", usersRoutes);
+
+// creating a new educational entity
+app.post("/api/entity", async (req, res, next) => {
+  const newEntity = new Entity({
+    name: req.body.name,
+    city: req.body.city,
+    governorate: req.body.governorate,
+  });
+
+  try {
+    await newEntity.save();
+
+    res.status(201).json({
+      message: "Entity added successfully!",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+    });
+  }
+});
+
+// getting all educational entities
+app.get("/api/entities", async (req, res, next) => {
+  try {
+    const result = await Entity.find();
+    const entities = result.map((e) => e.name);
+    res.status(200).json(entities);
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+    });
+  }
+});
 
 // exporting the app so we can use it to create server in server.js
 module.exports = app;

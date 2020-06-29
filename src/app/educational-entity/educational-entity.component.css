@@ -1,0 +1,15 @@
+mat-form-field,
+mat-spinner {
+  margin: auto;
+}
+
+.container {
+  width: 300px;
+  margin-top: 50px;
+}
+
+/* @media (min-width: 600px) {
+  .container {
+    width: 600px;
+  } */
+/* } */

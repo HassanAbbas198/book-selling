@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-6">
+      <a routerLink="/" class="btn btn-light mb-3 float-left">Back To Home</a>
+    </div>
+    <div class="col-6"></div>
+  </div>
+
+  <!-- Profile Header -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-body bg-info text-white mb-3">
+        <div class="row">
+          <div class="col-4 col-md-3 m-auto">
+            <img class="rounded-circle" [src]="avatar" alt="" />
+          </div>
+        </div>
+        <div class="text-center">
+          <h1 class="display-4 text-center">{{ name }}</h1>
+          <p class="lead text-center">{{ email }}</p>
+          <p>{{ location }}</p>
+          <p>
+            <a class="text-white p-2" href="#">
+              <i class="fas fa-globe fa-2x"></i>
+            </a>
+            <a class="text-white p-2" href="#">
+              <i class="fab fa-twitter fa-2x"></i>
+            </a>
+            <a class="text-white p-2" href="#">
+              <i class="fab fa-facebook fa-2x"></i>
+            </a>
+            <a class="text-white p-2" href="#">
+              <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+            <a class="text-white p-2" href="#">
+              <i class="fab fa-instagram fa-2x"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <!-- <a class="btn btn-danger mb-3 float-left">Delete my account</a> -->
+      <button
+        class="float-left"
+        mat-stroked-button
+        color="warn"
+        (click)="deleteAccount()"
+      >
+        Delete my account
+      </button>
+    </div>
+    <div class="col-6"></div>
+  </div>
+</div>

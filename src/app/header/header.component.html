@@ -21,7 +21,11 @@
     </li>
 
     <li *ngIf="userIsAuthenticated">
-      <button mat-button (click)="logout()">Logout</button>
+      <button mat-button [matMenuTriggerFor]="menu">{{ loggedInUser }}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="profile">My Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
     </li>
   </ul>
 </mat-toolbar>
